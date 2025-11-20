@@ -1,16 +1,85 @@
-# drift_notes_app
+# drift_notes
 
-A new Flutter project.
+A Flutter note-taking / journaling app that uses **Drift** (formerly Moor) for local persistence.
 
-## Getting Started
+## 🚀 Features  
+- Create, edit, and delete notes  
+- Offline storage with **Drift** (SQLite)  
+- Cross-platform support: Android, iOS, Web, Windows, macOS  
+- Clean architecture: separation between UI and database layer  
+- Reactive UI: automatically updates when database changes
 
-This project is a starting point for a Flutter application.
+## 🧱 Architecture & Technologies  
+- **Flutter** for UI  
+- **Dart** as programming language  
+- **Drift** for a type-safe, reactive local database  
+- **Build Runner** + **drift_dev** for code generation  
+- Structured project layout: `lib/`, `test/`, and platform-specific dirs  
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ Getting Started  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Prerequisites**  
+- Flutter (stable)  
+- Dart (comes with Flutter)  
+- A device or emulator (Android, iOS, web)  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Setup**  
+```bash
+git clone https://github.com/AliHamza324/drift_notes.git  
+cd drift_notes  
+flutter pub get  
+```
+
+**Generate Drift code**  
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs  
+```
+
+**Run the app**  
+```bash
+flutter run  
+```  
+To run on web:  
+```bash
+flutter run -d chrome  
+```
+
+## 🧾 Usage  
+1. Open the app to see your list of notes  
+2. Tap the “+” button to create a new note (title + content)  
+3. Tap an existing note to edit it, or swipe to delete  
+4. Changes are stored locally and persist across app restarts  
+
+## 🧠 Database Structure  
+Using **Drift**, the schema might have:  
+- `notes` table  
+  - `id` (auto-increment integer)  
+  - `title` (text)  
+  - `content` (text)  
+  - `created_at` (DateTime)  
+  - `updated_at` (DateTime)  
+
+You'll have a `Database` class annotated with `@DriftDatabase(...)`, generated part file, and a `NoteDao` for CRUD.
+
+## ✅ Testing  
+- Write unit and integration tests in the `test/` folder  
+- Run tests with:  
+```bash
+flutter test  
+```  
+- Use an **in-memory Drift database** for fast DB tests
+
+## 🙌 Contributing  
+Contributions are very welcome!  
+- Open issues for bugs or features  
+- Create pull requests for improvements  
+- Suggest enhancements: categories, tags, search, sync, etc.
+
+Workflow: fork → branch → commit → PR.
+
+## 📜 License  
+This project is licensed under the **MIT License**. (Or choose your preferred license.)
+
+## 🎉 Acknowledgements  
+- Thanks to the **Drift** team for the powerful local database  
+- Thanks to the **Flutter** community for the rich ecosystem  
