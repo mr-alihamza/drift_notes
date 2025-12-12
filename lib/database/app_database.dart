@@ -5,7 +5,7 @@ part 'app_database.g.dart';
 
 LazyDatabase openConnection() {
   return LazyDatabase(() {
-    return driftDatabase(name: "My Database");
+        return driftDatabase(name: "My Database");
   });
 }
 
