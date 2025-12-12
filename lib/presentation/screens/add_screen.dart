@@ -42,6 +42,16 @@ class AddScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            InkWell(
+              onTap: () {},
+              child: Center(
+                child: CircleAvatar(
+                  radius: 60,
+                  child: Center(child: Icon(Icons.person,size: 30,)),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
             MyTextFormFeild(labelText: "Enter Name", controller: nameCtrl),
             SizedBox(height: 12),
 
