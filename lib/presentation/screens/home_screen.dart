@@ -1,6 +1,6 @@
-import 'package:drift_notes_app/add_screen.dart';
+import 'package:drift_notes_app/presentation/screens/add_screen.dart';
+import 'package:drift_notes_app/presentation/widgets/my_text.dart';
 import 'package:drift_notes_app/utils.dart';
-import 'package:drift_notes_app/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
