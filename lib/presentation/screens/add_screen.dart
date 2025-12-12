@@ -1,6 +1,6 @@
-import 'package:drift_notes_app/presentation/widgets/my_container.dart';
-import 'package:drift_notes_app/presentation/widgets/my_text.dart';
-import 'package:drift_notes_app/presentation/widgets/my_text_form_feild.dart';
+import 'package:drift_notes_app/core/widgets/my_container.dart';
+import 'package:drift_notes_app/core/widgets/my_text.dart';
+import 'package:drift_notes_app/core/widgets/my_text_form_feild.dart';
 import 'package:drift_notes_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
