@@ -6,7 +6,6 @@ import 'package:get/route_manager.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-  //ghjkjhgfdfghjkjhgfghjhjj
   @override
   Widget build(BuildContext context) {
     return Scaffold(
