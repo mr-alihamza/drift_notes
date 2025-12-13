@@ -7,5 +7,12 @@ abstract class AddScreenEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PickImageEvent extends AddScreenEvent{}
-class VerifiedOrNotEvent extends AddScreenEvent{}
+class PickImageEvent extends AddScreenEvent {}
+
+class VerifiedOrNotEvent extends AddScreenEvent {
+  final bool value;
+  const VerifiedOrNotEvent({required this.value});
+
+  @override
+  List<Object> get props => [value];
+}

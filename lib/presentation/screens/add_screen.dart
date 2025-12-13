@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:drift_notes_app/core/widgets/my_container.dart';
 import 'package:drift_notes_app/core/widgets/my_text.dart';
 import 'package:drift_notes_app/core/widgets/my_text_form_feild.dart';
+import 'package:drift_notes_app/presentation/blocs/add%20screen%20bloc/bloc/add_screen_bloc.dart';
 import 'package:drift_notes_app/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddScreen extends StatelessWidget {
   final bool? isEdit;
@@ -28,13 +31,12 @@ class AddScreen extends StatelessWidget {
     final nameCtrl = TextEditingController();
     final descCtrl = TextEditingController();
     final phoneCtrl = TextEditingController();
-    Rx<bool?> verif = verified.obs;
     if (isEdit == true) {
       nameCtrl.text = name.toString();
       descCtrl.text = desc.toString();
       phoneCtrl.text = phone.toString();
     }
-    RxBool isVerified = false.obs;
+    // RxBool isVerified = false.obs;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -42,15 +44,25 @@ class AddScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            InkWell(
-              onTap: () {},
-              child: Center(
-                child: CircleAvatar(
-                  radius: 60,
-                  child: Center(child: Icon(Icons.person,size: 30,)),
-                ),
-              ),
+            BlocSelector<AddScreenBloc, AddScreenState, XFile?>(
+              selector: (state) => state.imageFile,
+              builder: (context, imageFile) {
+                return InkWell(
+                  onTap: () {
+                    context.read<AddScreenBloc>().add(PickImageEvent());
+                  },
+                  child: Center(
+                    child: CircleAvatar(
+                      radius: 60,
+                      child: imageFile != null
+                          ? Image.file(File(imageFile.path), fit: BoxFit.cover)
+                          : Center(child: Icon(Icons.person, size: 30)),
+                    ),
+                  ),
+                );
+              },
             ),
+
             SizedBox(height: 20),
             MyTextFormFeild(labelText: "Enter Name", controller: nameCtrl),
             SizedBox(height: 12),
@@ -68,15 +80,20 @@ class AddScreen extends StatelessWidget {
             SizedBox(height: 12),
             Row(
               children: [
-                Obx(
-                  () => Checkbox(
-                    value: isEdit == true ? verif.value : isVerified.value,
-                    onChanged: (value) {
-                      isVerified.value = value!;
-                      verif.value = value;
-                    },
-                  ),
+                BlocSelector<AddScreenBloc, AddScreenState, bool>(
+                  selector: (state) => state.isVerified,
+                  builder: (context, state) {
+                    return Checkbox(
+                      value: state,
+                      onChanged: (value) {
+                        context.read<AddScreenBloc>().add(
+                          VerifiedOrNotEvent(value: value!),
+                        );
+                      },
+                    );
+                  },
                 ),
+
                 SizedBox(width: 10),
                 MyText(text: "Verify your identity."),
               ],
@@ -90,27 +107,27 @@ class AddScreen extends StatelessWidget {
                             name: nameCtrl.text,
                             description: descCtrl.text,
                             phoneNumber: phoneCtrl.text,
-                            isVerified: isVerified.value,
+                            isVerified: true,
+                            // isVerified.value,
                           )
                           .then((_) {
                             nameCtrl.clear();
                             descCtrl.clear();
                             phoneCtrl.clear();
-                            isVerified.value = false;
+                            // isVerified.value = false;
                           })
-                          .then((_) {
-                            Get.back();
-                          })
+                          .then((_) {})
                     : db
                           .updateNotes(
                             name: nameCtrl.text,
                             description: descCtrl.text,
                             phoneNumber: phoneCtrl.text,
-                            isVerified: isVerified.value,
+                            isVerified: true,
+                            //  isVerified.value,
                             id: id!,
                           )
                           .then((_) {
-                            Get.back();
+                            //  Get.back();
                           });
               },
               child: Center(
@@ -118,7 +135,7 @@ class AddScreen extends StatelessWidget {
                   color: const Color.fromARGB(255, 72, 73, 73),
                   borderRadius: BorderRadius.circular(12),
                   height: 40,
-                  width: Get.width - 70,
+                  width: 80,
                   child: Center(
                     child: MyText(
                       text: isEdit == true ? "Save Edit" : "Save Note",

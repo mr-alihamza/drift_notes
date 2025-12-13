@@ -2,7 +2,6 @@ import 'package:drift_notes_app/presentation/screens/add_screen.dart';
 import 'package:drift_notes_app/core/widgets/my_text.dart';
 import 'package:drift_notes_app/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,7 +10,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => AddScreen(isEdit: false));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddScreen(isEdit: false)),
+          );
         },
         child: Center(child: Icon(Icons.add)),
       ),
@@ -57,14 +59,17 @@ class HomeScreen extends StatelessWidget {
                       icon: Icon(Icons.more_vert, color: Colors.white),
                       onSelected: (value) {
                         if (value == "edit") {
-                          Get.to(
-                            () => AddScreen(
-                              isEdit: true,
-                              name: data.name,
-                              desc: data.description,
-                              phone: data.phoneNumber,
-                              id: data.id,
-                              verified: data.isVerified,
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddScreen(
+                                isEdit: true,
+                                name: data.name,
+                                desc: data.description,
+                                phone: data.phoneNumber,
+                                id: data.id,
+                                verified: data.isVerified,
+                              ),
                             ),
                           );
                         }
