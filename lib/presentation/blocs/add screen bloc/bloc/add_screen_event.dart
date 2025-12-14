@@ -16,3 +16,12 @@ class VerifiedOrNotEvent extends AddScreenEvent {
   @override
   List<Object> get props => [value];
 }
+
+class AddUserEvent extends AddScreenEvent {
+ final UserEntity userEntity;
+ const AddUserEvent({required this.userEntity});
+
+ @override
+  List<Object> get props => [userEntity];
+}
+

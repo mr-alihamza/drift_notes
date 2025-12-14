@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:drift_notes_app/core/widgets/my_container.dart';
 import 'package:drift_notes_app/core/widgets/my_text.dart';
 import 'package:drift_notes_app/core/widgets/my_text_form_feild.dart';
+import 'package:drift_notes_app/domain/entities/user_entity.dart';
 import 'package:drift_notes_app/presentation/blocs/add%20screen%20bloc/bloc/add_screen_bloc.dart';
-import 'package:drift_notes_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,17 +62,14 @@ class AddScreen extends StatelessWidget {
                 );
               },
             ),
-
             SizedBox(height: 20),
             MyTextFormFeild(labelText: "Enter Name", controller: nameCtrl),
             SizedBox(height: 12),
-
             MyTextFormFeild(
               labelText: "Enter Description",
               controller: descCtrl,
             ),
             SizedBox(height: 12),
-
             MyTextFormFeild(
               labelText: "Enter Phone Number",
               controller: phoneCtrl,
@@ -101,34 +98,44 @@ class AddScreen extends StatelessWidget {
             SizedBox(height: 12),
             InkWell(
               onTap: () async {
-                isEdit != true
-                    ? db
-                          .addNotes(
-                            name: nameCtrl.text,
-                            description: descCtrl.text,
-                            phoneNumber: phoneCtrl.text,
-                            isVerified: true,
-                            // isVerified.value,
-                          )
-                          .then((_) {
-                            nameCtrl.clear();
-                            descCtrl.clear();
-                            phoneCtrl.clear();
-                            // isVerified.value = false;
-                          })
-                          .then((_) {})
-                    : db
-                          .updateNotes(
-                            name: nameCtrl.text,
-                            description: descCtrl.text,
-                            phoneNumber: phoneCtrl.text,
-                            isVerified: true,
-                            //  isVerified.value,
-                            id: id!,
-                          )
-                          .then((_) {
-                            //  Get.back();
-                          });
+                context.read<AddScreenBloc>().add(
+                  AddUserEvent(
+                    userEntity: UserEntity(
+                      name: nameCtrl.text,
+                      description: descCtrl.text,
+                      phoneNumber: phoneCtrl.text,
+                      isVerified: true,
+                    ),
+                  ),
+                );
+                // isEdit != true
+                //     ? db
+                //           .addNotes(
+                //             name: nameCtrl.text,
+                //             description: descCtrl.text,
+                //             phoneNumber: phoneCtrl.text,
+                //             isVerified: true,
+                //             // isVerified.value,
+                //           )
+                //           .then((_) {
+                //             nameCtrl.clear();
+                //             descCtrl.clear();
+                //             phoneCtrl.clear();
+                //             // isVerified.value = false;
+                //           })
+                //           .then((_) {})
+                //     : db
+                //           .updateNotes(
+                //             name: nameCtrl.text,
+                //             description: descCtrl.text,
+                //             phoneNumber: phoneCtrl.text,
+                //             isVerified: true,
+                //             //  isVerified.value,
+                //             id: id!,
+                //           )
+                //           .then((_) {
+                //             //  Get.back();
+                //           });
               },
               child: Center(
                 child: MyContainer(

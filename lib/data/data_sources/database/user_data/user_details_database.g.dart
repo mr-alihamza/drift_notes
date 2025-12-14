@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_database.dart';
+part of 'user_details_database.dart';
 
 // ignore_for_file: type=lint
-class $NotesTableTable extends NotesTable
-    with TableInfo<$NotesTableTable, NotesTableData> {
+class $UserDetailsTableTable extends UserDetailsTable
+    with TableInfo<$UserDetailsTableTable, UserDetailsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $NotesTableTable(this.attachedDatabase, [this._alias]);
+  $UserDetailsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -53,6 +53,17 @@ class $NotesTableTable extends NotesTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _imagePathMeta = const VerificationMeta(
+    'imagePath',
+  );
+  @override
+  late final GeneratedColumn<String> imagePath = GeneratedColumn<String>(
+    'image_path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _isVerifiedMeta = const VerificationMeta(
     'isVerified',
   );
@@ -74,16 +85,17 @@ class $NotesTableTable extends NotesTable
     name,
     description,
     phoneNumber,
+    imagePath,
     isVerified,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'notes_table';
+  static const String $name = 'user_details_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<NotesTableData> instance, {
+    Insertable<UserDetailsTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -121,6 +133,14 @@ class $NotesTableTable extends NotesTable
     } else if (isInserting) {
       context.missing(_phoneNumberMeta);
     }
+    if (data.containsKey('image_path')) {
+      context.handle(
+        _imagePathMeta,
+        imagePath.isAcceptableOrUnknown(data['image_path']!, _imagePathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_imagePathMeta);
+    }
     if (data.containsKey('is_verified')) {
       context.handle(
         _isVerifiedMeta,
@@ -133,9 +153,9 @@ class $NotesTableTable extends NotesTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NotesTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  UserDetailsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NotesTableData(
+    return UserDetailsTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -152,6 +172,10 @@ class $NotesTableTable extends NotesTable
         DriftSqlType.string,
         data['${effectivePrefix}phone_number'],
       )!,
+      imagePath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_path'],
+      )!,
       isVerified: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}is_verified'],
@@ -160,22 +184,25 @@ class $NotesTableTable extends NotesTable
   }
 
   @override
-  $NotesTableTable createAlias(String alias) {
-    return $NotesTableTable(attachedDatabase, alias);
+  $UserDetailsTableTable createAlias(String alias) {
+    return $UserDetailsTableTable(attachedDatabase, alias);
   }
 }
 
-class NotesTableData extends DataClass implements Insertable<NotesTableData> {
+class UserDetailsTableData extends DataClass
+    implements Insertable<UserDetailsTableData> {
   final int id;
   final String name;
   final String description;
   final String phoneNumber;
+  final String imagePath;
   final bool isVerified;
-  const NotesTableData({
+  const UserDetailsTableData({
     required this.id,
     required this.name,
     required this.description,
     required this.phoneNumber,
+    required this.imagePath,
     required this.isVerified,
   });
   @override
@@ -185,30 +212,33 @@ class NotesTableData extends DataClass implements Insertable<NotesTableData> {
     map['name'] = Variable<String>(name);
     map['description'] = Variable<String>(description);
     map['phone_number'] = Variable<String>(phoneNumber);
+    map['image_path'] = Variable<String>(imagePath);
     map['is_verified'] = Variable<bool>(isVerified);
     return map;
   }
 
-  NotesTableCompanion toCompanion(bool nullToAbsent) {
-    return NotesTableCompanion(
+  UserDetailsTableCompanion toCompanion(bool nullToAbsent) {
+    return UserDetailsTableCompanion(
       id: Value(id),
       name: Value(name),
       description: Value(description),
       phoneNumber: Value(phoneNumber),
+      imagePath: Value(imagePath),
       isVerified: Value(isVerified),
     );
   }
 
-  factory NotesTableData.fromJson(
+  factory UserDetailsTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return NotesTableData(
+    return UserDetailsTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       description: serializer.fromJson<String>(json['description']),
       phoneNumber: serializer.fromJson<String>(json['phoneNumber']),
+      imagePath: serializer.fromJson<String>(json['imagePath']),
       isVerified: serializer.fromJson<bool>(json['isVerified']),
     );
   }
@@ -220,25 +250,28 @@ class NotesTableData extends DataClass implements Insertable<NotesTableData> {
       'name': serializer.toJson<String>(name),
       'description': serializer.toJson<String>(description),
       'phoneNumber': serializer.toJson<String>(phoneNumber),
+      'imagePath': serializer.toJson<String>(imagePath),
       'isVerified': serializer.toJson<bool>(isVerified),
     };
   }
 
-  NotesTableData copyWith({
+  UserDetailsTableData copyWith({
     int? id,
     String? name,
     String? description,
     String? phoneNumber,
+    String? imagePath,
     bool? isVerified,
-  }) => NotesTableData(
+  }) => UserDetailsTableData(
     id: id ?? this.id,
     name: name ?? this.name,
     description: description ?? this.description,
     phoneNumber: phoneNumber ?? this.phoneNumber,
+    imagePath: imagePath ?? this.imagePath,
     isVerified: isVerified ?? this.isVerified,
   );
-  NotesTableData copyWithCompanion(NotesTableCompanion data) {
-    return NotesTableData(
+  UserDetailsTableData copyWithCompanion(UserDetailsTableCompanion data) {
+    return UserDetailsTableData(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       description: data.description.present
@@ -247,6 +280,7 @@ class NotesTableData extends DataClass implements Insertable<NotesTableData> {
       phoneNumber: data.phoneNumber.present
           ? data.phoneNumber.value
           : this.phoneNumber,
+      imagePath: data.imagePath.present ? data.imagePath.value : this.imagePath,
       isVerified: data.isVerified.present
           ? data.isVerified.value
           : this.isVerified,
@@ -255,11 +289,12 @@ class NotesTableData extends DataClass implements Insertable<NotesTableData> {
 
   @override
   String toString() {
-    return (StringBuffer('NotesTableData(')
+    return (StringBuffer('UserDetailsTableData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
           ..write('phoneNumber: $phoneNumber, ')
+          ..write('imagePath: $imagePath, ')
           ..write('isVerified: $isVerified')
           ..write(')'))
         .toString();
@@ -267,45 +302,51 @@ class NotesTableData extends DataClass implements Insertable<NotesTableData> {
 
   @override
   int get hashCode =>
-      Object.hash(id, name, description, phoneNumber, isVerified);
+      Object.hash(id, name, description, phoneNumber, imagePath, isVerified);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is NotesTableData &&
+      (other is UserDetailsTableData &&
           other.id == this.id &&
           other.name == this.name &&
           other.description == this.description &&
           other.phoneNumber == this.phoneNumber &&
+          other.imagePath == this.imagePath &&
           other.isVerified == this.isVerified);
 }
 
-class NotesTableCompanion extends UpdateCompanion<NotesTableData> {
+class UserDetailsTableCompanion extends UpdateCompanion<UserDetailsTableData> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> description;
   final Value<String> phoneNumber;
+  final Value<String> imagePath;
   final Value<bool> isVerified;
-  const NotesTableCompanion({
+  const UserDetailsTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.description = const Value.absent(),
     this.phoneNumber = const Value.absent(),
+    this.imagePath = const Value.absent(),
     this.isVerified = const Value.absent(),
   });
-  NotesTableCompanion.insert({
+  UserDetailsTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     required String description,
     required String phoneNumber,
+    required String imagePath,
     this.isVerified = const Value.absent(),
   }) : name = Value(name),
        description = Value(description),
-       phoneNumber = Value(phoneNumber);
-  static Insertable<NotesTableData> custom({
+       phoneNumber = Value(phoneNumber),
+       imagePath = Value(imagePath);
+  static Insertable<UserDetailsTableData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? description,
     Expression<String>? phoneNumber,
+    Expression<String>? imagePath,
     Expression<bool>? isVerified,
   }) {
     return RawValuesInsertable({
@@ -313,22 +354,25 @@ class NotesTableCompanion extends UpdateCompanion<NotesTableData> {
       if (name != null) 'name': name,
       if (description != null) 'description': description,
       if (phoneNumber != null) 'phone_number': phoneNumber,
+      if (imagePath != null) 'image_path': imagePath,
       if (isVerified != null) 'is_verified': isVerified,
     });
   }
 
-  NotesTableCompanion copyWith({
+  UserDetailsTableCompanion copyWith({
     Value<int>? id,
     Value<String>? name,
     Value<String>? description,
     Value<String>? phoneNumber,
+    Value<String>? imagePath,
     Value<bool>? isVerified,
   }) {
-    return NotesTableCompanion(
+    return UserDetailsTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      imagePath: imagePath ?? this.imagePath,
       isVerified: isVerified ?? this.isVerified,
     );
   }
@@ -348,6 +392,9 @@ class NotesTableCompanion extends UpdateCompanion<NotesTableData> {
     if (phoneNumber.present) {
       map['phone_number'] = Variable<String>(phoneNumber.value);
     }
+    if (imagePath.present) {
+      map['image_path'] = Variable<String>(imagePath.value);
+    }
     if (isVerified.present) {
       map['is_verified'] = Variable<bool>(isVerified.value);
     }
@@ -356,48 +403,53 @@ class NotesTableCompanion extends UpdateCompanion<NotesTableData> {
 
   @override
   String toString() {
-    return (StringBuffer('NotesTableCompanion(')
+    return (StringBuffer('UserDetailsTableCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
           ..write('phoneNumber: $phoneNumber, ')
+          ..write('imagePath: $imagePath, ')
           ..write('isVerified: $isVerified')
           ..write(')'))
         .toString();
   }
 }
 
-abstract class _$AppDatabase extends GeneratedDatabase {
-  _$AppDatabase(QueryExecutor e) : super(e);
-  $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $NotesTableTable notesTable = $NotesTableTable(this);
+abstract class _$UserDetailsDatabase extends GeneratedDatabase {
+  _$UserDetailsDatabase(QueryExecutor e) : super(e);
+  $UserDetailsDatabaseManager get managers => $UserDetailsDatabaseManager(this);
+  late final $UserDetailsTableTable userDetailsTable = $UserDetailsTableTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [notesTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [userDetailsTable];
 }
 
-typedef $$NotesTableTableCreateCompanionBuilder =
-    NotesTableCompanion Function({
+typedef $$UserDetailsTableTableCreateCompanionBuilder =
+    UserDetailsTableCompanion Function({
       Value<int> id,
       required String name,
       required String description,
       required String phoneNumber,
+      required String imagePath,
       Value<bool> isVerified,
     });
-typedef $$NotesTableTableUpdateCompanionBuilder =
-    NotesTableCompanion Function({
+typedef $$UserDetailsTableTableUpdateCompanionBuilder =
+    UserDetailsTableCompanion Function({
       Value<int> id,
       Value<String> name,
       Value<String> description,
       Value<String> phoneNumber,
+      Value<String> imagePath,
       Value<bool> isVerified,
     });
 
-class $$NotesTableTableFilterComposer
-    extends Composer<_$AppDatabase, $NotesTableTable> {
-  $$NotesTableTableFilterComposer({
+class $$UserDetailsTableTableFilterComposer
+    extends Composer<_$UserDetailsDatabase, $UserDetailsTableTable> {
+  $$UserDetailsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -424,15 +476,20 @@ class $$NotesTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get imagePath => $composableBuilder(
+    column: $table.imagePath,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<bool> get isVerified => $composableBuilder(
     column: $table.isVerified,
     builder: (column) => ColumnFilters(column),
   );
 }
 
-class $$NotesTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $NotesTableTable> {
-  $$NotesTableTableOrderingComposer({
+class $$UserDetailsTableTableOrderingComposer
+    extends Composer<_$UserDetailsDatabase, $UserDetailsTableTable> {
+  $$UserDetailsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -459,15 +516,20 @@ class $$NotesTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get imagePath => $composableBuilder(
+    column: $table.imagePath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<bool> get isVerified => $composableBuilder(
     column: $table.isVerified,
     builder: (column) => ColumnOrderings(column),
   );
 }
 
-class $$NotesTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $NotesTableTable> {
-  $$NotesTableTableAnnotationComposer({
+class $$UserDetailsTableTableAnnotationComposer
+    extends Composer<_$UserDetailsDatabase, $UserDetailsTableTable> {
+  $$UserDetailsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -490,53 +552,64 @@ class $$NotesTableTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get imagePath =>
+      $composableBuilder(column: $table.imagePath, builder: (column) => column);
+
   GeneratedColumn<bool> get isVerified => $composableBuilder(
     column: $table.isVerified,
     builder: (column) => column,
   );
 }
 
-class $$NotesTableTableTableManager
+class $$UserDetailsTableTableTableManager
     extends
         RootTableManager<
-          _$AppDatabase,
-          $NotesTableTable,
-          NotesTableData,
-          $$NotesTableTableFilterComposer,
-          $$NotesTableTableOrderingComposer,
-          $$NotesTableTableAnnotationComposer,
-          $$NotesTableTableCreateCompanionBuilder,
-          $$NotesTableTableUpdateCompanionBuilder,
+          _$UserDetailsDatabase,
+          $UserDetailsTableTable,
+          UserDetailsTableData,
+          $$UserDetailsTableTableFilterComposer,
+          $$UserDetailsTableTableOrderingComposer,
+          $$UserDetailsTableTableAnnotationComposer,
+          $$UserDetailsTableTableCreateCompanionBuilder,
+          $$UserDetailsTableTableUpdateCompanionBuilder,
           (
-            NotesTableData,
-            BaseReferences<_$AppDatabase, $NotesTableTable, NotesTableData>,
+            UserDetailsTableData,
+            BaseReferences<
+              _$UserDetailsDatabase,
+              $UserDetailsTableTable,
+              UserDetailsTableData
+            >,
           ),
-          NotesTableData,
+          UserDetailsTableData,
           PrefetchHooks Function()
         > {
-  $$NotesTableTableTableManager(_$AppDatabase db, $NotesTableTable table)
-    : super(
+  $$UserDetailsTableTableTableManager(
+    _$UserDetailsDatabase db,
+    $UserDetailsTableTable table,
+  ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$NotesTableTableFilterComposer($db: db, $table: table),
+              $$UserDetailsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$NotesTableTableOrderingComposer($db: db, $table: table),
+              $$UserDetailsTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$NotesTableTableAnnotationComposer($db: db, $table: table),
+              $$UserDetailsTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String> description = const Value.absent(),
                 Value<String> phoneNumber = const Value.absent(),
+                Value<String> imagePath = const Value.absent(),
                 Value<bool> isVerified = const Value.absent(),
-              }) => NotesTableCompanion(
+              }) => UserDetailsTableCompanion(
                 id: id,
                 name: name,
                 description: description,
                 phoneNumber: phoneNumber,
+                imagePath: imagePath,
                 isVerified: isVerified,
               ),
           createCompanionCallback:
@@ -545,12 +618,14 @@ class $$NotesTableTableTableManager
                 required String name,
                 required String description,
                 required String phoneNumber,
+                required String imagePath,
                 Value<bool> isVerified = const Value.absent(),
-              }) => NotesTableCompanion.insert(
+              }) => UserDetailsTableCompanion.insert(
                 id: id,
                 name: name,
                 description: description,
                 phoneNumber: phoneNumber,
+                imagePath: imagePath,
                 isVerified: isVerified,
               ),
           withReferenceMapper: (p0) => p0
@@ -561,27 +636,31 @@ class $$NotesTableTableTableManager
       );
 }
 
-typedef $$NotesTableTableProcessedTableManager =
+typedef $$UserDetailsTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$AppDatabase,
-      $NotesTableTable,
-      NotesTableData,
-      $$NotesTableTableFilterComposer,
-      $$NotesTableTableOrderingComposer,
-      $$NotesTableTableAnnotationComposer,
-      $$NotesTableTableCreateCompanionBuilder,
-      $$NotesTableTableUpdateCompanionBuilder,
+      _$UserDetailsDatabase,
+      $UserDetailsTableTable,
+      UserDetailsTableData,
+      $$UserDetailsTableTableFilterComposer,
+      $$UserDetailsTableTableOrderingComposer,
+      $$UserDetailsTableTableAnnotationComposer,
+      $$UserDetailsTableTableCreateCompanionBuilder,
+      $$UserDetailsTableTableUpdateCompanionBuilder,
       (
-        NotesTableData,
-        BaseReferences<_$AppDatabase, $NotesTableTable, NotesTableData>,
+        UserDetailsTableData,
+        BaseReferences<
+          _$UserDetailsDatabase,
+          $UserDetailsTableTable,
+          UserDetailsTableData
+        >,
       ),
-      NotesTableData,
+      UserDetailsTableData,
       PrefetchHooks Function()
     >;
 
-class $AppDatabaseManager {
-  final _$AppDatabase _db;
-  $AppDatabaseManager(this._db);
-  $$NotesTableTableTableManager get notesTable =>
-      $$NotesTableTableTableManager(_db, _db.notesTable);
+class $UserDetailsDatabaseManager {
+  final _$UserDetailsDatabase _db;
+  $UserDetailsDatabaseManager(this._db);
+  $$UserDetailsTableTableTableManager get userDetailsTable =>
+      $$UserDetailsTableTableTableManager(_db, _db.userDetailsTable);
 }

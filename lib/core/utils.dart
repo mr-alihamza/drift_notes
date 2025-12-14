@@ -1,8 +1,7 @@
-import 'package:drift_notes_app/database/app_database.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-final AppDatabase db = AppDatabase();
+
 ImagePicker imagePicker = ImagePicker();
 
 
